@@ -15,3 +15,12 @@
 - Observer 类，对数据进行观测
 - walk 方法：遍历 data 属性（对象属性遍历）
 - defineReactive 方法：利用 Object.defineProperty 实现数据劫持
+
+### 第四篇 对象的深度劫持
+
+- 通过 data = isFunction(data) ? data.call(vm) : data;处理后的 data 一定是对象类型
+- 通过 data = observe(data)处理后的 data 就实现了数据的响应式（目前只有劫持）
+- observe 方法最终返回一个 Observer 类
+- Observer 类初始化时，通过 walk 遍历属性
+- 对每一个属性进行 defineReactive（Object.defineProperty）就实现对象属性的单层数据劫持
+- 在 defineReactive 中，如果属性值为对象类型就继续调用 observe 对当前的对象属性进行观测（即递归步骤 3~5），这样就实现了对象属性的深层数据劫持
