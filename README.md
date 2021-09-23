@@ -24,3 +24,7 @@
 - Observer 类初始化时，通过 walk 遍历属性
 - 对每一个属性进行 defineReactive（Object.defineProperty）就实现对象属性的单层数据劫持
 - 在 defineReactive 中，如果属性值为对象类型就继续调用 observe 对当前的对象属性进行观测（即递归步骤 3~5），这样就实现了对象属性的深层数据劫持
+
+### 第五篇 - 数组的劫持
+
+- 出于对性能的考虑，Vue 没有对数组采用 Object.defineProperty 进行递归劫持，而是对能够导致原数组变化的 7 个方法进行了拦截和重写，实现了对数组的数据劫持

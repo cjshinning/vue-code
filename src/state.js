@@ -20,5 +20,8 @@ function initData(vm) {
     data = isFunction(data) ? data.call(vm) : data;
     // data 数据的响应式：遍历对象拿到所有属性，再通过Object.defineProperty 重写 data 中的所有属性  
     observe(data);
-    console.log(data);
+
+    // 测试数组方法的拦截效果
+    data.arr.push(666);
+    data.arr.pop();
 }

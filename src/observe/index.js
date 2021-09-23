@@ -1,6 +1,10 @@
 import {
-    isObject
+    isObject,
+    isArray
 } from '../utils';
+import {
+    arrayMethods
+} from './array';
 
 export function observe(value) {
     if (!isObject(value)) {
@@ -15,8 +19,13 @@ export function observe(value) {
 // 遍历对象属性，使用 Object.defineProperty 重新定义 data 对象中的属性
 class Observer {
     constructor(value) {
-        // 如果value是对象，遍历对象中的属性，使用 Object.defineProperty 重新定义
-        this.walk(value); //循环对象属性
+        if (isArray(value)) {
+            // 对数组类型进行单独处理：重写 7 个变异方法
+            value.__proto__ = arrayMethods;
+        } else {
+            // 如果value是对象，遍历对象中的属性，使用 Object.defineProperty 重新定义
+            this.walk(value); //循环对象属性
+        }
     }
 
     // 循环 data 对象，使用 Object.keys 不循环原型方法
