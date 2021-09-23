@@ -11,8 +11,7 @@
 
 ### 第三篇 对象的单向劫持
 
-- data 为函数和对象的处理
-- data 函数中 this 的指向
+- data 为函数和对象的处理，及当 data 为函数时的 this 指向问题
 - Observer 类，对数据进行观测
-- walk 方法，遍历 data 属性（后面深层就不能叫 data 了）
+- walk 方法：遍历 data 属性（对象属性遍历）
 - defineReactive 方法：利用 Object.defineProperty 实现数据劫持
