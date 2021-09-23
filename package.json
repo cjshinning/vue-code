@@ -1,0 +1,26 @@
+{
+  "name": "vue-code",
+  "version": "1.0.0",
+  "description": "learn vue",
+  "main": "index.js",
+  "scripts": {
+    "dev": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjshinning/vue-code.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjshinning/vue-code/issues"
+  },
+  "homepage": "https://github.com/cjshinning/vue-code#readme",
+  "dependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "rollup": "^2.57.0",
+    "rollup-plugin-babel": "^4.4.0"
+  }
+}
