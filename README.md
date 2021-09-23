@@ -28,3 +28,8 @@
 ### 第五篇 - 数组的劫持
 
 - 出于对性能的考虑，Vue 没有对数组采用 Object.defineProperty 进行递归劫持，而是对能够导致原数组变化的 7 个方法进行了拦截和重写，实现了对数组的数据劫持
+
+### 第六篇 - 数据代理的实现
+
+- 将 data 暴露在 vm.\_data 实例属性上
+- 利用 Object.defineProperty 将 vm.xxx 操作代理到 vm.\_data 上
