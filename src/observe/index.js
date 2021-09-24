@@ -22,6 +22,7 @@ class Observer {
         if (isArray(value)) {
             // 对数组类型进行单独处理：重写 7 个变异方法
             value.__proto__ = arrayMethods;
+            this.observeArray(value);
         } else {
             // 如果value是对象，遍历对象中的属性，使用 Object.defineProperty 重新定义
             this.walk(value); //循环对象属性
@@ -35,7 +36,18 @@ class Observer {
             defineReactive(data, key, data[key]);
         })
     }
+
+    /**
+     * 遍历数组，对数组中的对象进行递归观测
+     * 1）[[]] 数组套数组
+     * 2）[{}] 数组套对象
+     * @param {*} data 
+     */
+    observeArray(data) {
+        data.forEach(item => observe(item))
+    }
 }
+
 
 /**
  * 给对象obj，定义属性key，值为value

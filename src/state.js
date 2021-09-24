@@ -15,7 +15,9 @@ export function initState(vm) {
 
 function initData(vm) {
     let data = vm.$options.data;
+
     data = vm._data = isFunction(data) ? data.call(vm) : data;
+
     observe(data);
 
     // 当 vm.message 在 vm 实例上取值时，将它代理到vm._data上去取
