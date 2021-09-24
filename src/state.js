@@ -14,6 +14,7 @@ export function initState(vm) {
 }
 
 function initData(vm) {
+    console.log("进入 state.js - initData，数据初始化操作");
     let data = vm.$options.data;
 
     data = vm._data = isFunction(data) ? data.call(vm) : data;
