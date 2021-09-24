@@ -19,6 +19,11 @@ export function observe(value) {
 // 遍历对象属性，使用 Object.defineProperty 重新定义 data 对象中的属性
 class Observer {
     constructor(value) {
+        Object.defineProperty(value, '__ob__', {
+            value: this,
+            enumerable: false //不可被枚举
+        })
+
         if (isArray(value)) {
             // 对数组类型进行单独处理：重写 7 个变异方法
             value.__proto__ = arrayMethods;
