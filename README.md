@@ -65,3 +65,10 @@
 1. 调用 render 函数生成新的 vnode 虚拟节点；
 2. 通过 diff 算法对新老 vnode 虚拟节点进行对比；
 3. 根据虚拟节点比对结果，更新真实 dom；
+
+### 第十二篇 - 生成 ast 语法树-流程说明
+
+- Vue 核心渲染流程回顾
+- 三种模板写法及优先级
+- Vue 的原型方法 \$mount
+- compileToFunction -> parserHTM 流程说明
