@@ -29,15 +29,15 @@ export function initMixin(Vue) {
             let template = opts.template;
             // console.log('template = ', template);
             if (!template) {
-                console.log("没有template, el.outerHTML = " + el.outerHTML)
+                // console.log("没有template, el.outerHTML = " + el.outerHTML)
                 // 将模板编译为 render 函数
                 template = el.outerHTML;
-            } else {
-                console.log("有template = " + template)
             }
 
+            debugger;
             let render = compileToFunction(template);
             opts.render = render;
+            console.log("打印 compileToFunction 返回的 render = " + JSON.stringify(render));
         }
     }
 }

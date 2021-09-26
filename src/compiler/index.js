@@ -90,10 +90,13 @@ function generate(ast) {
 }
 
 export function compileToFunction(template) {
+    console.log("***** 进入 compileToFunction：将 template 编译为 render 函数 *****");
     // 1、将模板变成AST语法树
     let ast = parserHTML(template);
-    // debugger;
     // 2、使用AST生成render函数
     let code = generate(ast);
-    console.log(code);
+    let render = new Function(`with(this){return ${code}}`);
+    console.log("包装 with 生成 render 函数："+ render.toString())
+    
+    return render;
 }

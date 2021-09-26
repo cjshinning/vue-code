@@ -92,3 +92,10 @@
 - 处理属性：genProps(ast.attrs)
 - 处理属性中的样式
 - 递归深层处理儿子：genChildren
+
+### 第十七篇 - 生成 render 函数 - 函数生成
+- 生成 render 函数的大致流程：
+1. html模板编译称为 ast 语法树；
+2. ast 语法树生成并拼接 code；
+3. 使用 with 对生成的 code 进行一次包装；
+4. 将包装后的完整 code 字符串，通过 new Function 输出为 render 函数
