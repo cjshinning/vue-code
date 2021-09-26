@@ -86,3 +86,9 @@
 - 基于 html 特点，使用栈型数据结构记录父子关系
 - 开始标签，结束标签及文本的处理方式
 - 代码重构及ast 语法树构建过程分析
+
+### 第十六篇 - 生成 render 函数 - 代码拼接
+- render 函数的代码拼接：generate(ast)
+- 处理属性：genProps(ast.attrs)
+- 处理属性中的样式
+- 递归深层处理儿子：genChildren
