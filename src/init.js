@@ -27,7 +27,7 @@ export function initMixin(Vue) {
 
         if (!opts.render) {
             let template = opts.template;
-            console.log('template = ', template);
+            // console.log('template = ', template);
             if (!template) {
                 console.log("没有template, el.outerHTML = " + el.outerHTML)
                 // 将模板编译为 render 函数
