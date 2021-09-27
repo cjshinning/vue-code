@@ -4,6 +4,7 @@ import {
 import {
     compileToFunction
 } from './compiler';
+import { mountComponent } from "./lifecycle";
 
 export function initMixin(Vue) {
     Vue.prototype._init = function (options) {
@@ -34,10 +35,12 @@ export function initMixin(Vue) {
                 template = el.outerHTML;
             }
 
-            debugger;
             let render = compileToFunction(template);
             opts.render = render;
-            console.log("打印 compileToFunction 返回的 render = " + JSON.stringify(render));
+            // console.log("打印 compileToFunction 返回的 render = " + JSON.stringify(render));
         }
+
+        // 将当前 render 渲染到 el 元素上
+        mountComponent(vm);
     }
 }

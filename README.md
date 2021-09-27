@@ -99,3 +99,7 @@
 2. ast 语法树生成并拼接 code；
 3. 使用 with 对生成的 code 进行一次包装；
 4. 将包装后的完整 code 字符串，通过 new Function 输出为 render 函数
+
+### 第十八篇 - 根据 render 函数，生成 vnode
+- 封装 vm._render 返回虚拟节点
+- _s，_v，_c的实现
