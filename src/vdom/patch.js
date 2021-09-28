@@ -9,7 +9,7 @@ export function patch(el, vnode){
     // 1，根据虚拟节点创建真实节点
     const elm = createElm(vnode);
     console.log("createElm", elm);
-
+    
     // 2，使用真实节点替换掉老节点
     // 找到元素的父亲节点
     const parentNode = el.parentNode;
