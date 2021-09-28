@@ -5,6 +5,7 @@ import {
 import {
     arrayMethods
 } from './array';
+import Dep from './dep';
 
 export function observe(value) {
     if (!isObject(value)) {
@@ -64,14 +65,19 @@ class Observer {
  */
 function defineReactive(obj, key, value) {
     observe(value); //递归实现深层观测
+    let dep = new Dep();    //为每个属性添加一个 dep
     Object.defineProperty(obj, key, {
         get() {
+            if(Dep.target) {
+                dep.depend();
+            }
             return value;
         },
         set(newValue) {
-            console.log("修改了被观测属性 key = " + key + ", newValue = " + JSON.stringify(newValue));
+            // console.log("修改了被观测属性 key = " + key + ", newValue = " + JSON.stringify(newValue));
             if (newValue === value) return;
             // 当值被修改时，通过 observe 实现对新值的深层观测，此时，新增对象将被观测
+            // vm._update(vm._render());
             observe(newValue);
             value = newValue;
         }
