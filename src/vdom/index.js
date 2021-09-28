@@ -3,6 +3,7 @@ export function createElement(vm, tag, data={}, ...children) {
     // 返回元素的虚拟节点（元素是没有文本的）
     return vnode(vm, tag, data, children, data.key, undefined);
 }
+
 export function createText(vm, text) {
     // 返回文本的虚拟节点（文本没有标签、数据、儿子、key）
     return vnode(vm, undefined, undefined, undefined, undefined, text);

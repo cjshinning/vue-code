@@ -40,6 +40,7 @@ export function initMixin(Vue) {
             // console.log("打印 compileToFunction 返回的 render = " + JSON.stringify(render));
         }
 
+        // debugger;
         // 将当前 render 渲染到 el 元素上
         mountComponent(vm);
     }
