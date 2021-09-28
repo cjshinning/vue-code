@@ -125,3 +125,17 @@
 - 介绍了 Watcher 和 Dep 的作用；
 - 实现了 Watcher 类和 Dep 类；
 - Watcher 和 Dep 如何产生关联；
+
+### 第二十三篇 - 依赖收集 - 视图更新部分
+- 视图初始化时：
+
+1. render方法中会进行取值操作，进入 Object.defineProperty 的 get 方法
+2. get 方法中为数据添加 dep，并记录当前的渲染 watcher
+3. 记录方式：watcher查重并记住 dep，dep 再记住 watcher
+
+- 数据更新时：
+
+1. 当数据发生改,会进入 Object.defineProperty 的 set 方法
+2. 在 set 方法中，使 dep 中收集的全部 watcher 执行视图渲染操作 watcher.get()
+3. 在视图渲染前（this.getter方法执行前）,通过 dep.target 记录当前的渲染 watcher
+4. 重复视图初始化流程

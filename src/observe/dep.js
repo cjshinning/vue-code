@@ -7,7 +7,17 @@ class Dep{
     }
     // 保存数据的渲染 watcher
     depend(){
-        this.subs.push(Dep.target);
+        Dep.target.addDep(this);
+    }
+    // 让 dep 记住 watcher - 在 watcher 中被调用
+    addSub(watcher){
+        this.subs.push(watcher);
+    }
+    // dep 中收集的全部 watcher 依次执行更新方法 update
+    notify(){
+        this.subs.forEach(watcher => {
+            watcher.update();
+        })
     }
 }
 
