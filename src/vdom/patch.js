@@ -6,17 +6,30 @@
  */
 export function patch(el, vnode){
     console.log(el, vnode);
-    // 根据虚拟节点创造真实节点,替换为真实元素并返回
+    // 1，根据虚拟节点创建真实节点
     const elm = createElm(vnode);
+    console.log("createElm", elm);
+
+    // 2，使用真实节点替换掉老节点
+    // 找到元素的父亲节点
+    const parentNode = el.parentNode;
+    // 找到老节点的下一个兄弟节点（nextSibling 若不存在将返回 null）
+    const nextSibling = el.nextSibling;
+    // 将新节点elm插入到老节点el的下一个兄弟节点nextSibling的前面
+    // 备注：若nextSibling为 null，insertBefore 等价与 appendChild
+    parentNode.insertBefore(elm, nextSibling);
+    // 删除老节点 el
+    parentNode.removeChild(el);
+
     return elm;
 }
 
 function createElm(vnode) {
     let {tag, data, children, text, vm} = vnode;
     if(typeof tag === 'string'){
-        vnode.el = document.createElement(tag)
+        vnode.el = document.createElement(tag);
         // 处理 data 属性
-        updateProperties(vnode.el, data)
+        updateProperties(vnode.el, data);
         children.forEach(child => {
             vnode.el.appendChild(createElm(child))
         });
