@@ -1,10 +1,7 @@
-import {
-    initState
-} from './state';
-import {
-    compileToFunction
-} from './compiler';
+import { initState } from './state';
+import { compileToFunction } from './compiler';
 import { mountComponent } from "./lifecycle";
+import { nextTick } from "./utils";
 
 export function initMixin(Vue) {
     Vue.prototype._init = function (options) {
@@ -40,6 +37,8 @@ export function initMixin(Vue) {
             // console.log("打印 compileToFunction 返回的 render = " + JSON.stringify(render));
         }
 
+        // 为 Vue 扩展原型方法 $nextTick
+        Vue.prototype.$nextTick = nextTick;
         // debugger;
         // 将当前 render 渲染到 el 元素上
         mountComponent(vm);

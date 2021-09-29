@@ -139,3 +139,11 @@
 2. 在 set 方法中，使 dep 中收集的全部 watcher 执行视图渲染操作 watcher.get()
 3. 在视图渲染前（this.getter方法执行前）,通过 dep.target 记录当前的渲染 watcher
 4. 重复视图初始化流程
+
+### 第二十四篇 - 异步更新流程
+- 为什么要做异步更新
+- 异步更新的实现思路
+- 数据变更缓存的位置
+- 缓存 watcher 更新逻辑
+- vm.$nextTick 获取更新后的 dom
+- 测试异步更新
