@@ -147,3 +147,13 @@
 - 缓存 watcher 更新逻辑
 - vm.$nextTick 获取更新后的 dom
 - 测试异步更新
+
+### 第二十五篇 - 数组依赖收集的原理
+
+### 第二十六篇 - 数组依赖收集的实现
+- 未实现
+
+### 第二十七篇 - Vue 生命周期的实现
+- Vue.mixin 介绍
+- Vue 的 Global API
+- Vue.mixin 实现

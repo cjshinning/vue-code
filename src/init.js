@@ -1,12 +1,12 @@
 import { initState } from './state';
 import { compileToFunction } from './compiler';
 import { mountComponent } from "./lifecycle";
-import { nextTick } from "./utils";
+import { nextTick, mergeOptions } from "./utils";
 
 export function initMixin(Vue) {
     Vue.prototype._init = function (options) {
         const vm = this;
-        vm.$options = options;
+        vm.$options = mergeOptions(vm.constructor.options, options);;
 
         // new Vue时，传入options选项，包含el和data
         initState(vm);
