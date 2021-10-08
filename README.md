@@ -157,3 +157,9 @@
 - Vue.mixin 介绍
 - Vue 的 Global API
 - Vue.mixin 实现
+
+### 【Vue2.x 源码学习】第二十八篇 - diff算法-问题分析与patch优化
+- 初始化与更新流程分析；
+- 问题分析与优化思路；
+- 新老虚拟节点比对模拟；
+- patch 方法改造；

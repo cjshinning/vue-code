@@ -16,3 +16,4 @@ lifeCycleMixin(Vue);
 initGlobalAPI(Vue);
 
 export default Vue;
+

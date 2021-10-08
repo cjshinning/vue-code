@@ -37,14 +37,12 @@ export function mountComponent(vm){
     let updateComponent = () => {
         vm._update(vm._render());
     }
-    // updateComponent();
     
     callHook(vm, 'beforeCreate');
 
-
     // 渲染 watcher ：每个组件都有一个 watcher
     new Watcher(vm, updateComponent, () => {
-        console.log('Watcher-update');
+        // console.log('Watcher-update');
         callHook(vm, 'created');
     }, true);
 
