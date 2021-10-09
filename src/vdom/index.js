@@ -21,3 +21,7 @@ function vnode(vm, tag, data, children, key, text) {
         text      // 文本
     }
 }
+
+export function isSameVnode(newVnode, oldVnode){
+    return (newVnode.tag === oldVnode.tag) && (newVnode.key === oldVnode.key);
+}
