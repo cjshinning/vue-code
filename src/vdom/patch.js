@@ -53,8 +53,77 @@ export function patch(el, oldVnode, vnode){
     }
 }
 
+/**
+ * 新老都有儿子时做比对，即 diff 算法核心逻辑
+ * 备注：采用头尾双指针的方式；优化头头、尾尾、头尾、尾头的特殊情况；
+ * @param {*} el 
+ * @param {*} oldChildren 老的儿子节点
+ * @param {*} newChildren 新的儿子节点
+ */
+function updateChildren(el, oldChildren, newChildren){
+    let oldStartIndex = 0;
+    let oldStartVnode = oldChildren[0];
+    let oldEndIndex = oldChildren.length - 1;
+    let oldEndVnode = oldChildren[oldEndIndex];
+
+    let newStartIndex = 0;
+    let newStartVnode = newChildren[0];
+    let newEndIndex = newChildren.length - 1;
+    let newEndVnode = newChildren[newEndIndex];
+
+    while (oldStartIndex <= oldEndIndex && newStartIndex <= newEndIndex) {
+        if (isSameVnode(oldStartVnode, newStartVnode)) {
+            patch(oldStartVnode, newStartVnode);
+            oldStartVnode = oldChildren[++oldStartIndex];
+            newStartVnode = newChildren[++newStartIndex];
+        }else if(isSameVnode(oldEndVnode, newEndVnode)){
+            patch(oldEndVnode, newEndVnode);
+            oldEndVnode = oldChildren[--oldEndIndex];
+            newEndVnode = newChildren[--newEndIndex];
+            // 头尾比较：老的头节点和新的尾节点做对比
+        }else if(isSameVnode(oldStartVnode, newEndVnode)){
+            // patch方法只会duff比较并更新属性，但元素的位置不会变化
+            patch(oldStartVnode, newEndVnode);// diff:包括递归比儿子
+            // 移动节点：将当前的节点插入到最后一个节点的下一个节点的前面去
+            el.insertBefore(oldStartVnode.el, oldEndVnode.el.nextSibling);
+            // 移动指针
+            oldStartVnode = oldChildren[++oldStartIndex];
+            newEndVnode = newChildren[--newEndIndex];
+        }
+    }
+    
+    // 1，新的多（以新指针为参照）插入新增
+    if (newStartIndex <= newEndIndex) {
+        // 新的开始指针和新的结束指针之间的节点
+        for (let i = newStartIndex; i <= newEndIndex; i++) {
+        // 判断当前尾节点的下一个元素是否存在：
+        //  1，如果存在：则插入到下一个元素的前面
+        //  2，如果不存在（下一个是 null） ：就是 appendChild
+        // 取参考节点 anchor:决定新节点放到前边还是后边
+        //  逻辑：取去newChildren的尾部+1,判断是否为 null
+        //  解释：如果有值说明是向前移动的，取出此虚拟元素的真实节点el，将新节点添加到此真实节点前即可
+        let anchor = newChildren[newEndIndex + 1] == null ? null : newChildren[newEndIndex + 1].el
+        // 获取对应的虚拟节点，并生成真实节点，添加到 dom 中
+        // el.appendChild(createElm(newChildren[i]))
+        // 逻辑合并:将 appendChild 改为 insertBefore
+        //  效果：既有appendChild又有insertBefore的功能，直接将参考节点放进来即可;
+        //  解释：对于insertBefore方法,如果anchor为null，等同于appendChild;如果有值，则是insertBefore;
+        el.insertBefore(createElm(newChildren[i]),anchor)
+        }
+    }
+
+    // 2，老儿子比新儿子多，（以旧指针为参照）删除多余的真实节点
+    if(oldStartIndex <= oldEndIndex){
+        for(let i = oldStartIndex; i <= oldEndIndex; i++){
+        let child = oldChildren[i];
+        el.removeChild(child.el);
+        }
+    }
+
+}
+
 export function createElm(vnode) {
-    let{tag, data, children, text, vm} = vnode;
+    let {tag, data, children, text, vm} = vnode;
     if(typeof tag === 'string'){
       vnode.el = document.createElement(tag)
       updateProperties(vnode, data) // 修改。。。
