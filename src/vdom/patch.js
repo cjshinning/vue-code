@@ -6,7 +6,7 @@ import { isSameVnode } from './index';
  * @param {*} vnode vnode 虚拟节点
  * @returns         新的真实元素
  */
-export function patch(oldVnode, vnode){
+export function patch(el, oldVnode, vnode){
     const isRealElement = oldVnode.nodeType;
     if(isRealElement){// 真实节点，走老逻辑
         const elm = createElm(vnode);
@@ -15,7 +15,7 @@ export function patch(oldVnode, vnode){
         parentNode.removeChild(oldVnode);
         return elm;
     }else{// 虚拟节点：做 diff 算法，新老节点比对
-        console.log(oldVnode, vnode);
+        // console.log(oldVnode, vnode);
         if(!isSameVnode(oldVnode, vnode)){
             return oldVnode.el.parentNode.replaceChild(createElm(vnode), oldVnode.el);
         }else{
@@ -29,6 +29,26 @@ export function patch(oldVnode, vnode){
                     return; 
                 }
             }
+        }
+        updateProperties(vnode, oldVnode.data);
+
+        // 比较儿子节点
+        let oldChildren = oldVnode.children || {};
+        let newChildren = vnode.children || {};
+
+        // 情况 1：老的有儿子，新的没有儿子；直接将对于的老 dom 元素干掉即可;
+        if(oldChildren.length > 0 && newChildren.length == 0){
+            el.innerHTML = '';
+        // 情况 2：老的没有儿子，新的有儿子；直接将新的儿子节点放入对应的老节点中即可
+        }else if(oldChildren.length == 0 && newChildren.length > 0){
+            newChildren.forEach((child)=>{
+                let childElm = createElm(child);
+                el.appendChild(childElm);
+            })
+        // 情况 3：新老都有儿子
+        }else{
+            // diff 比对的核心逻辑
+            updateChildren(el, oldChildren, newChildren); 
         }
     }
 }
@@ -45,7 +65,7 @@ export function createElm(vnode) {
       vnode.el = document.createTextNode(text)
     }
     return vnode.el;
-  }
+}
   
 function updateProperties(vnode, oldProps = {} ) {
     let el = vnode.el;
